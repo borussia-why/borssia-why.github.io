@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Borussia-why</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Borussia-why">
+  <title>xxl-job部署流程 | Borussia-why</title>
+  <meta name="keywords" content=" 分部署 , 定时任务 ">
+  <meta name="description" content="xxl-job部署流程 | Borussia-why">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="[toc] 1、介绍：xxl-job是一个分布式任务调度平台，在分布式环境下可以自行控制任务调度时间、监控、可在不同环境下随意设置配置； 整个任务调度由两部分组成： 1、admin程序：用于配置各个任务的调度时间、监控等。此程序一定要注意安全，不允许其他人随意访问； 2、应用程序：具体的任务执行程序； 请注意：admin程序版本号，必须与应用程序版本号一致，否则可能出现各种各样的问题！文章使用的版">
 <meta property="og:type" content="article">
@@ -58,7 +58,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -255,12 +255,51 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-xxl-job/xxl-job部署流程" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93"><span class="toc-text">日常总结</span></a></li></ol>
+        <h1 class="article-title">xxl-job部署流程</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="xxl-job">xxl-job</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">分部署</a>
+            
+            <a class="color5">定时任务</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-06-12 20:39:22'>2022-06-12 19:47</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:722</span>
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="toc-text">1、介绍：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%83%A8%E7%BD%B2admin%E7%A8%8B%E5%BA%8F%EF%BC%9A"><span class="toc-text">2、部署admin程序：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">3、部署应用程序</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -273,12 +312,125 @@
     }
 </style>
 </div>
-            <h1 id="日常总结"><a href="#日常总结" class="headerlink" title="日常总结"></a>日常总结</h1><p>平时学习的总结，没有什么参考价值。</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="toc-text">1、介绍：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%83%A8%E7%BD%B2admin%E7%A8%8B%E5%BA%8F%EF%BC%9A"><span class="toc-text">2、部署admin程序：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">3、部署应用程序</span></a></li></ol></div></p>
+<h1 id="1、介绍："><a href="#1、介绍：" class="headerlink" title="1、介绍："></a>1、介绍：</h1><p>xxl-job是一个分布式任务调度平台，在分布式环境下可以自行控制任务调度时间、监控、可在不同环境下随意设置配置；</p>
+<p>整个任务调度由两部分组成：</p>
+<p>1、admin程序：用于配置各个任务的调度时间、监控等。此程序一定要注意安全，不允许其他人随意访问；</p>
+<p>2、应用程序：具体的任务执行程序；</p>
+<p><strong>请注意：admin程序版本号，必须与应用程序版本号一致，否则可能出现各种各样的问题！文章使用的版本为：2.3.1</strong></p>
+<h1 id="2、部署admin程序："><a href="#2、部署admin程序：" class="headerlink" title="2、部署admin程序："></a>2、部署admin程序：</h1><p>我们使用docker的形式部署，好处是方便！而且它身为一个调度服务，也并不需要特别大的jvm内存；</p>
+<p>docker地址：<a target="_blank" rel="noopener" href="https://hub.docker.com/r/xuxueli/xxl-job-admin">https://hub.docker.com/r/xuxueli/xxl-job-admin</a></p>
+<pre><code class="dockerfile">docker run -e JAVA_OPTS=&quot;-Xmx512m&quot; -e PARAMS=&quot;--spring.datasource.url=URL --spring.datasource.username=USERNAME --spring.datasource.password=PASSWORD --spring.mail.host=HOST --spring.mail.port=PORT --spring.mail.username=USERNAME --spring.mail.from=FROM --spring.mail.password=PASSWORD &quot; -p 9091:8080 -v /data/logs/xxl-dev:/data/applogs --name xxl-job-admin-dev  -d xuxueli/xxl-job-admin:2.3.1
+</code></pre>
+<ul>
+<li>-e JAVA_OPTS：JVM基础配置，我们这里只配置了堆内存的最大限制；</li>
+<li>-e PARAMS：java程序的配置信息，也就是application.yml中写的；<ul>
+<li>–spring.datasource.url：数据库链接地址；</li>
+<li>spring.datasource.username：用户名；</li>
+<li>spring.datasource.password：密码；</li>
+<li>spring.mail.host：报警邮件；</li>
+<li>spring.mail.port：报警邮件端口；</li>
+<li>spring.mail.username：邮件用户名；</li>
+<li>spring.mail.from：邮件发送者；</li>
+<li>spring.mail.password：邮件密码</li>
+</ul>
+</li>
+<li>–name：当前admin程序的docker镜像名</li>
+</ul>
+<h1 id="3、部署应用程序"><a href="#3、部署应用程序" class="headerlink" title="3、部署应用程序"></a>3、部署应用程序</h1><p>1、增加maven地址</p>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;com.xuxueli&lt;/groupId&gt;
+            &lt;artifactId&gt;xxl-job-core&lt;/artifactId&gt;
+            &lt;version&gt;2.3.1&lt;/version&gt;
+        &lt;/dependency&gt;	
+</code></pre>
+<p>2、增加application.yml配置</p>
+<pre><code class="yaml">xxl:
+  job:
+    admin:
+      # admin程序启动地址，用于主动注册
+      addresses: http://192.168.20.204:9091/xxl-job-admin
+    # 与admin程序配套的token，不一致会被拒绝
+    accessToken: default_token
+    executor:
+      # 应用名
+      appname: caocao-service
+      address:
+      ip:
+      # 0为默认端口9999
+      port: 0
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+</code></pre>
+<p>3、增加配置文件</p>
+<pre><code class="java">@Configuration
+public class XxlJobConfig &#123;
+    private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 
-        </article>
-        
-        
+    @Value(&quot;$&#123;xxl.job.admin.addresses&#125;&quot;)
+    private String adminAddresses;
+    @Value(&quot;$&#123;xxl.job.accessToken&#125;&quot;)
+    private String accessToken;
+    @Value(&quot;$&#123;xxl.job.executor.appname&#125;&quot;)
+    private String appname;
+    @Value(&quot;$&#123;xxl.job.executor.address&#125;&quot;)
+    private String address;
+    @Value(&quot;$&#123;xxl.job.executor.ip&#125;&quot;)
+    private String ip;
+    @Value(&quot;$&#123;xxl.job.executor.port&#125;&quot;)
+    private int port;
+    @Value(&quot;$&#123;xxl.job.executor.logpath&#125;&quot;)
+    private String logPath;
+    @Value(&quot;$&#123;xxl.job.executor.logretentiondays&#125;&quot;)
+    private int logRetentionDays;
+
+
+    @Bean
+    public XxlJobSpringExecutor xxlJobExecutor() &#123;
+        logger.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; xxl-job config init.&quot;);
+        XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
+        xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
+        xxlJobSpringExecutor.setAppname(appname);
+        xxlJobSpringExecutor.setAddress(address);
+        xxlJobSpringExecutor.setIp(ip);
+        xxlJobSpringExecutor.setPort(port);
+        xxlJobSpringExecutor.setAccessToken(accessToken);
+        xxlJobSpringExecutor.setLogPath(logPath);
+        xxlJobSpringExecutor.setLogRetentionDays(logRetentionDays);
+        return xxlJobSpringExecutor;
+    &#125;
+&#125;
+</code></pre>
+<p>4、增加具体定时任务</p>
+<pre><code class="java">@Slf4j
+@Component
+public class DemoTasks &#123;
+
+    @XxlJob(&quot;demoJobHandler&quot;)
+    public void demoJobHandler() &#123;
+        log.info(&quot;演示任务：&#123;&#125;&quot;, DateUtil.now());
+    &#125;
+
+&#125;
+</code></pre>
+
+      
+       
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -287,11 +439,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
